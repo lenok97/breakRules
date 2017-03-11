@@ -76,6 +76,7 @@ public class Character : Unit
         if (Input.GetButton("Horizontal")) Run();
         if (isGrounded && Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Fire1")) Shoot();
+        if (Input.GetButtonDown("Gravity")) ChangeGravity();
     }
 
     private void Run()
@@ -105,6 +106,12 @@ public class Character : Unit
         newBullet.Parent = gameObject;
         newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
 
+    }
+
+    private void ChangeGravity()
+    {
+        sprite.flipY = !sprite.flipY;
+        rigidbody.gravityScale *= -1;
     }
 
     public override void ReceiveDamage()
