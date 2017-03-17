@@ -12,8 +12,10 @@ public enum CharState
 public class Character : Unit
 {
     [SerializeField]
+    public GameObject Cam;
+    public bool visibly=true;
+    public bool shell=false;
     private static int maxLives = 20;
-
     public static int MaxLives
     {
         get { return maxLives; }
@@ -76,6 +78,31 @@ public class Character : Unit
         if (Input.GetButton("Horizontal")) Run();
         if (isGrounded && Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Fire1")) Shoot();
+        if (Input.GetKeyDown("i"))          //невидимость
+        {
+            if (visibly)
+            {
+                visibly = false;
+                Cam.GetComponent<Camera>().cullingMask = 0;
+            }
+            else
+            {
+                visibly = true;
+                Cam.GetComponent<Camera>().cullingMask = -1;
+
+            }
+        }
+        if (Input.GetKeyDown("s"))          //щит
+        {
+            if (!shell)
+            {
+                shell = true;
+            }
+            else
+            {
+                shell = false;
+            }
+        }
     }
 
     private void Run()
@@ -109,12 +136,18 @@ public class Character : Unit
 
     public override void ReceiveDamage()
     {
-        Lives--;
+        
+        if (!shell)                         //проверка на наличие щита
+        {
+            Lives--;
+            rigidbody.velocity = Vector3.zero;
+            rigidbody.AddForce(transform.up * 8.0F, ForceMode2D.Impulse);
+            Debug.Log(lives);
+        }
+        else shell = false;
 
-        rigidbody.velocity = Vector3.zero;
-        rigidbody.AddForce(transform.up * 8.0F, ForceMode2D.Impulse);
-        Debug.Log(lives);
     }
+
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
