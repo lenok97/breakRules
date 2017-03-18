@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootableMonster : Monster 
+public class ShootableMonster : Monster
 {
     [SerializeField]
     private float rate = 2.0F;
@@ -11,6 +11,8 @@ public class ShootableMonster : Monster
     private Color bulletColor = Color.white;
 
     private Bullet bullet;
+    [SerializeField]
+    private GameObject Screen;
 
     protected override void Awake()
     {
@@ -24,13 +26,16 @@ public class ShootableMonster : Monster
 
     private void Shoot()
     {
-        Vector3 position = transform.position;
-        position.y += 0.3F;
+        if (Screen.GetComponent<Character>().visibly == true)
+        {
+            Vector3 position = transform.position;
+            position.y += 0.3F;
 
-        Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
-        newBullet.Parent = gameObject;
-        newBullet.Direction = -newBullet.transform.right;
-        newBullet.Color = bulletColor;
+            Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
+            newBullet.Parent = gameObject;
+            newBullet.Direction = -newBullet.transform.right;
+            newBullet.Color = bulletColor;
+        }
     }
 
     protected override void OnTriggerEnter2D(Collider2D collider)
