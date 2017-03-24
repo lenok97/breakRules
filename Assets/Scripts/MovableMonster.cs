@@ -18,7 +18,8 @@ public class MovableMonster : Monster
 
     protected override void Update()
     {
-        Move();
+        if (!base.frozen) 
+            Move();
     }
 
     protected override void Start()
