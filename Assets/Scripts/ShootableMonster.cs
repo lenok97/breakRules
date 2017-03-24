@@ -6,20 +6,20 @@ public class ShootableMonster : Monster
 {
     [SerializeField]
     private float rate = 2.0F;
-
     [SerializeField]
-    private Color bulletColor = Color.white;
-
+    public GameObject screen;
     private Bullet bullet;
 
     protected override void Awake()
     {
-        bullet = Resources.Load<Bullet>("Bullet");
+        bullet = Resources.Load<Laser>("Laser");
     }
 
     protected override void Start()
     {
-        InvokeRepeating("Shoot", rate, rate);
+        if (screen.GetComponent<Camera>().cullingMask == -1)
+            InvokeRepeating("Shoot", rate, rate);
+        
     }
 
     private void Shoot()
@@ -30,7 +30,6 @@ public class ShootableMonster : Monster
         Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
         newBullet.Parent = gameObject;
         newBullet.Direction = -newBullet.transform.right;
-        newBullet.Color = bulletColor;
     }
 
     protected override void OnTriggerEnter2D(Collider2D collider)
