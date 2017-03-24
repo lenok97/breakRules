@@ -41,6 +41,7 @@ public class Character : Unit
     private float jumpForce = 15.0F;
 
     private bool isGrounded = false;
+    private bool canJump = true;
 
     private Bullet bullet;
 
@@ -74,9 +75,11 @@ public class Character : Unit
     {
         if (isGrounded) State = CharState.Idle;
         if (Input.GetButton("Horizontal")) Run();
-        if (isGrounded && Input.GetButtonDown("Jump")) Jump();
-        if (Input.GetButtonDown("Fire1")) Shoot();
-        if (Input.GetButtonDown("Gravity")) ChangeGravity();
+        if (Input.GetButton("Fire")) Shoot();
+        if (canJump && isGrounded && Input.GetButtonDown("Jump")) Jump();
+
+        if (Input.GetButtonDown("ChangeGravity")) ChangeGravity();
+        if (Input.GetButtonDown("CanJump")) canJump = !canJump;
     }
 
     private void Run()
@@ -92,7 +95,6 @@ public class Character : Unit
 
     private void Jump()
     {
-        State = CharState.Jump;
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
