@@ -16,6 +16,18 @@ public class Character : Unit
     public bool visibly=true;
     public bool shell=false;
     private static int maxLives = 20;
+<<<<<<< HEAD
+=======
+
+    Vector3 gravityRotate = new Vector3(0, 180, 180);
+
+    private float rate = 0.7F;
+
+    public GameObject Cam;
+    public bool visibly = true;
+    public bool shell = false;
+
+>>>>>>> d6aaff8911397d647dab71469ca31616dac70bc3
     public static int MaxLives
     {
         get { return maxLives; }
@@ -43,6 +55,7 @@ public class Character : Unit
     private float jumpForce = 15.0F;
 
     private bool isGrounded = false;
+    private bool canJump = true;
 
     private Bullet bullet;
 
@@ -59,12 +72,12 @@ public class Character : Unit
     private void Awake()
     {
         livesBar = FindObjectOfType<LivesBar>();
-
+        
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         sprite = GetComponentInChildren<SpriteRenderer>();
 
-        bullet = Resources.Load<Bullet>("Bullet");
+        bullet = Resources.Load<Bomb>("Bomb");
     }
 
     private void FixedUpdate()
@@ -75,10 +88,35 @@ public class Character : Unit
     private void Update()
     {
         if (isGrounded) State = CharState.Idle;
+<<<<<<< HEAD
         if (Input.GetButton("Horizontal")) Run();
         if (isGrounded && Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Fire1")) Shoot();
         if (Input.GetKeyDown("i"))          //невидимость
+=======
+        if (Input.GetButton("Horizontal") && !base.frozen) Run();
+        if (canJump && isGrounded && Input.GetButtonDown("Jump")) Jump();
+        if (Input.GetButtonDown("Fire1")&& base.canShoot)
+        {
+            bullet = Resources.Load<Laser>("Laser");
+            Shoot();
+        }
+        if (Input.GetButtonDown("Fire2") && base.canShoot)
+        {
+            bullet = Resources.Load<Bomb>("Bomb");
+            Shoot();
+        }
+        if (Input.GetButtonDown("Fire3") && base.canShoot)
+        {
+            bullet = Resources.Load<Stun>("Stun");
+            Shoot();
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeGravity();
+        if (Input.GetKeyDown(KeyCode.Alpha2)) canJump = !canJump;
+        if (Input.GetKeyDown(KeyCode.Alpha3))          //невидимость
+>>>>>>> d6aaff8911397d647dab71469ca31616dac70bc3
         {
             if (visibly)
             {
@@ -92,7 +130,11 @@ public class Character : Unit
 
             }
         }
+<<<<<<< HEAD
         if (Input.GetKeyDown("s"))          //щит
+=======
+        if (Input.GetKeyDown(KeyCode.Alpha4))          //щит
+>>>>>>> d6aaff8911397d647dab71469ca31616dac70bc3
         {
             if (!shell)
             {
@@ -111,31 +153,39 @@ public class Character : Unit
         Vector3 direction = transform.right * Input.GetAxis("Horizontal");
 
         transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
-
         sprite.flipX = direction.x < 0;
 
     }
 
     private void Jump()
     {
-        State = CharState.Jump;
         rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
     }
 
     private void Shoot()
     {
+        canShoot = false;
+        Invoke("CanShoot", rate);
         Vector3 position = transform.position;
         position.y += 0.3F;
         position.x += 0.2F;
 
-        Bullet newBullet=Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
+        Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
         newBullet.Parent = gameObject;
         newBullet.Direction = newBullet.transform.right * (sprite.flipX ? -1.0F : 1.0F);
 
     }
 
+    private void ChangeGravity()
+    {
+        sprite = GetComponentInChildren<SpriteRenderer>();
+        transform.Rotate(gravityRotate);
+        rigidbody.gravityScale *= -1;
+    }
+
     public override void ReceiveDamage()
     {
+<<<<<<< HEAD
         
         if (!shell)                         //проверка на наличие щита
         {
@@ -146,13 +196,24 @@ public class Character : Unit
         }
         else shell = false;
 
+=======
+
+        if (!shell)                         //проверка на наличие щита
+        {
+            Lives--;
+            rigidbody.velocity = Vector3.zero;
+            rigidbody.AddForce(transform.up * 8.0F, ForceMode2D.Impulse);
+        }
+        else shell = false;
+
+>>>>>>> d6aaff8911397d647dab71469ca31616dac70bc3
     }
 
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         Bullet bullet = collider.gameObject.GetComponent<Bullet>();
-        if (bullet && bullet.Parent != gameObject)
+        if (bullet && bullet.Parent != this.gameObject)
         {
             ReceiveDamage();
         }
@@ -160,8 +221,20 @@ public class Character : Unit
 
     private void CheckGround()
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 0.3F);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1F);
+        int bulletsCount=0;
         isGrounded = colliders.Length > 1;
+        {
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                if (colliders[i].gameObject.GetComponent<Bullet>() != null)
+                {
+                    bulletsCount++;
+                }
+            }
+            if (bulletsCount>0 && bulletsCount==colliders.Length-1)
+                isGrounded = false;
+        }
         if (!isGrounded) State = CharState.Jump;
     }
 }
