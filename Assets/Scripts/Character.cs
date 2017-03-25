@@ -16,18 +16,10 @@ public class Character : Unit
     public bool visibly=true;
     public bool shell=false;
     private static int maxLives = 20;
-<<<<<<< HEAD
-=======
-
     Vector3 gravityRotate = new Vector3(0, 180, 180);
 
     private float rate = 0.7F;
-
-    public GameObject Cam;
-    public bool visibly = true;
-    public bool shell = false;
-
->>>>>>> d6aaff8911397d647dab71469ca31616dac70bc3
+    
     public static int MaxLives
     {
         get { return maxLives; }
@@ -88,12 +80,6 @@ public class Character : Unit
     private void Update()
     {
         if (isGrounded) State = CharState.Idle;
-<<<<<<< HEAD
-        if (Input.GetButton("Horizontal")) Run();
-        if (isGrounded && Input.GetButtonDown("Jump")) Jump();
-        if (Input.GetButtonDown("Fire1")) Shoot();
-        if (Input.GetKeyDown("i"))          //невидимость
-=======
         if (Input.GetButton("Horizontal") && !base.frozen) Run();
         if (canJump && isGrounded && Input.GetButtonDown("Jump")) Jump();
         if (Input.GetButtonDown("Fire1")&& base.canShoot)
@@ -115,8 +101,7 @@ public class Character : Unit
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) ChangeGravity();
         if (Input.GetKeyDown(KeyCode.Alpha2)) canJump = !canJump;
-        if (Input.GetKeyDown(KeyCode.Alpha3))          //невидимость
->>>>>>> d6aaff8911397d647dab71469ca31616dac70bc3
+        if (Input.GetKeyDown(KeyCode.Alpha3))    
         {
             if (visibly)
             {
@@ -130,21 +115,7 @@ public class Character : Unit
 
             }
         }
-<<<<<<< HEAD
-        if (Input.GetKeyDown("s"))          //щит
-=======
-        if (Input.GetKeyDown(KeyCode.Alpha4))          //щит
->>>>>>> d6aaff8911397d647dab71469ca31616dac70bc3
-        {
-            if (!shell)
-            {
-                shell = true;
-            }
-            else
-            {
-                shell = false;
-            }
-        }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) shell = !shell;
     }
 
     private void Run()
@@ -185,8 +156,6 @@ public class Character : Unit
 
     public override void ReceiveDamage()
     {
-<<<<<<< HEAD
-        
         if (!shell)                         //проверка на наличие щита
         {
             Lives--;
@@ -195,18 +164,6 @@ public class Character : Unit
             Debug.Log(lives);
         }
         else shell = false;
-
-=======
-
-        if (!shell)                         //проверка на наличие щита
-        {
-            Lives--;
-            rigidbody.velocity = Vector3.zero;
-            rigidbody.AddForce(transform.up * 8.0F, ForceMode2D.Impulse);
-        }
-        else shell = false;
-
->>>>>>> d6aaff8911397d647dab71469ca31616dac70bc3
     }
 
 

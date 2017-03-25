@@ -34,7 +34,6 @@ public class ShootableMonster : Monster
             Bullet newBullet = Instantiate(bullet, position, bullet.transform.rotation) as Bullet;
             newBullet.Parent = gameObject;
             newBullet.Direction = -newBullet.transform.right;
-            newBullet.Color = bulletColor;
         }
     }
 

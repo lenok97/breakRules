@@ -11,13 +11,13 @@ public class Stun : Bullet
     private float sizeFactor;
     private float actingTime = 5F;
 
-    protected virtual void Update()
+    protected override void Update()
     {
         base.Update();
         transform.Rotate(rotate);
     }
 
-    protected virtual void Start()
+    protected override void Start()
     {
         Destroy(gameObject, 3F);
         sizeFactor = randomFactor.Next(1, 20)*0.02F;
