@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LivesBar : MonoBehaviour 
+namespace BreakRules
 {
-    private Transform[] lives = new Transform[Character.MaxLives];
-    private Character character;
-
-    private void Awake()
+    public class LivesBar : MonoBehaviour
     {
-        character = FindObjectOfType<Character>();
+        private Transform[] lives = new Transform[Character.MaxLives];
+        private Character character;
 
-        for (int i = 0; i < lives.Length; i++)
+        private void Awake()
         {
-            lives[i] = transform.GetChild(i);
+            character = FindObjectOfType<Character>();
+
+            for (int i = 0; i < lives.Length; i++)
+            {
+                lives[i] = transform.GetChild(i);
+            }
         }
-    }
 
-    public void Refresh()
-    {
-        for (int i = 0; i < lives.Length; i++)
+        public void Refresh()
         {
-            if (i < character.Lives)
-                lives[i].gameObject.SetActive(true);
-            else
-                lives[i].gameObject.SetActive(false);
+            for (int i = 0; i < lives.Length; i++)
+            {
+                if (i < character.Lives)
+                    lives[i].gameObject.SetActive(true);
+                else
+                    lives[i].gameObject.SetActive(false);
+            }
         }
     }
 }

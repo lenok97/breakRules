@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LoadScenesScript : MonoBehaviour
+namespace BreakRules
 {
-    [SerializeField]
-    private string sceneName;
-
-    private void OnTriggerEnter2D(Collider2D collider)
+    public class LoadScenesScript : MonoBehaviour
     {
-        var player = collider.GetComponent<Character>();
-        if (player)
-        {
-            SceneManager.LoadScene(sceneName);
-        }
-    }
+        [SerializeField]
+        private string sceneName;
 
+        private void OnTriggerEnter2D(Collider2D collider)
+        {
+            var player = collider.GetComponent<Character>();
+            if (player)
+            {
+                SceneManager.LoadScene(sceneName);
+            }
+        }
+
+    }
 }

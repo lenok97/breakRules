@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Heart : MonoBehaviour 
+namespace BreakRules
 {
-    private void OnTriggerEnter2D(Collider2D collider)
+    public class Heart : MonoBehaviour
     {
-        Character character = collider.GetComponent<Character>();
-        if (character)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
-            character.Lives++;
-            Destroy(gameObject);
+            Character character = collider.GetComponent<Character>();
+            if (character)
+            {
+                character.Lives++;
+                Destroy(gameObject);
+            }
         }
     }
 }

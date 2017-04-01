@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour 
+namespace BreakRules
 {
-    private void OnTriggerEnter2D(Collider2D collider)
+    public class Obstacle : MonoBehaviour
     {
-        Unit unit = collider.GetComponent<Unit>();
-
-        if (unit && unit is Character)
+        private void OnTriggerEnter2D(Collider2D collider)
         {
-            unit.ReceiveDamage();
+            Unit unit = collider.GetComponent<Unit>();
+
+            if (unit && unit is Character)
+            {
+                unit.ReceiveDamage();
+            }
         }
     }
 }

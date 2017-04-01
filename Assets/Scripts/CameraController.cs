@@ -2,24 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour 
+namespace BreakRules
 {
-    [SerializeField]
-    private float speed = 2.0F;
-
-    [SerializeField]
-    private Transform target;
-
-    private void Awake()
+    namespace BreakRules
     {
-        if (!target) target = FindObjectOfType<Character>().transform;
-    }
+        public class CameraController : MonoBehaviour
+        {
+            [SerializeField]
+            private float speed = 2.0F;
 
-    private void Update()
-    {
-        Vector3 position = target.position;
-        position.z = -10.0F;
-        transform.position 
-            = Vector3.Lerp(transform.position, position, speed * Time.deltaTime);
+            [SerializeField]
+            private Transform target;
+
+            private void Awake()
+            {
+                if (!target) target = FindObjectOfType<Character>().transform;
+            }
+
+            private void Update()
+            {
+                Vector3 position = target.position;
+                position.z = -10.0F;
+                transform.position
+                    = Vector3.Lerp(transform.position, position, speed * Time.deltaTime);
+            }
+        }
     }
 }

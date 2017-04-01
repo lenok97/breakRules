@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuScript : MonoBehaviour
+namespace BreakRules
 {
-    private void OnGUI()
+    public class MenuScript : MonoBehaviour
     {
-        var rect = new Rect(Screen.width / 2f - 50, Screen.height / 2f - 15, 100, 30);
-
-        if (GUI.Button(rect, "Play"))
+        private void OnGUI()
         {
-            SceneManager.LoadScene("test");
+            var rect = new Rect(Screen.width / 2f - 50, Screen.height / 2f - 15, 100, 30);
+
+            if (GUI.Button(rect, "Play"))
+            {
+                SceneManager.LoadScene("test");
+            }
         }
     }
 }

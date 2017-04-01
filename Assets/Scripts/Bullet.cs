@@ -2,40 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace BreakRules
 {
-    private float speed = 10.0F;
-
-    private Vector3 direction;
-    public Vector3 Direction { set { direction = value; } get { return direction; } }
-
-    private GameObject parent;
-    public GameObject Parent { set { parent = value; } get { return parent; } }
-
-    private SpriteRenderer sprite;
-
-    protected virtual void Awake()
+    public class Bullet : MonoBehaviour
     {
-        sprite = GetComponentInChildren<SpriteRenderer>();
-    }
+        private float speed = 10.0F;
 
-    protected virtual void Start()
-    {
-        Destroy(gameObject, 1.4F);
-    }
+        private Vector3 direction;
+        public Vector3 Direction { set { direction = value; } get { return direction; } }
 
-    protected virtual void Update()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
-    }
+        private GameObject parent;
+        public GameObject Parent { set { parent = value; } get { return parent; } }
 
-    protected virtual void OnTriggerEnter2D(Collider2D collider)
-    {
-        Unit unit = collider.GetComponent<Unit>();
+        private SpriteRenderer sprite;
 
-        if (unit && unit.gameObject != parent)
+        protected virtual void Awake()
         {
-            Destroy(gameObject);
+            sprite = GetComponentInChildren<SpriteRenderer>();
+        }
+
+        protected virtual void Start()
+        {
+            Destroy(gameObject, 1.4F);
+        }
+
+        protected virtual void Update()
+        {
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, speed * Time.deltaTime);
+        }
+
+        protected virtual void OnTriggerEnter2D(Collider2D collider)
+        {
+            Unit unit = collider.GetComponent<Unit>();
+
+            if (unit && unit.gameObject != parent)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

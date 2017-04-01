@@ -2,47 +2,50 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovablePlatform : MonoBehaviour
+namespace BreakRules
 {
-    [SerializeField]
-    private float speed;
-
-    [SerializeField]
-    private Vector2 positionA;
-
-    [SerializeField]
-    private Vector2 positionB;
-
-    private bool movingToPointB;
-    private Vector2 direction;
-    private new Transform transform;
-
-    private void Awake()
+    public class MovablePlatform : MonoBehaviour
     {
-        transform = GetComponent<Transform>();
-        direction = positionB - positionA;
-        movingToPointB = true;
-    }
+        [SerializeField]
+        private float speed;
 
-    private void FixedUpdate()
-    {
-        var magnitude = ((movingToPointB ? positionB : positionA) - (Vector2)transform.position).magnitude;
-        if (magnitude < 0.5f)
+        [SerializeField]
+        private Vector2 positionA;
+
+        [SerializeField]
+        private Vector2 positionB;
+
+        private bool movingToPointB;
+        private Vector2 direction;
+        private new Transform transform;
+
+        private void Awake()
         {
-            movingToPointB = !movingToPointB;
-            direction *= -1;
+            transform = GetComponent<Transform>();
+            direction = positionB - positionA;
+            movingToPointB = true;
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + (Vector3)direction, speed * Time.deltaTime);
-    }
+        private void FixedUpdate()
+        {
+            var magnitude = ((movingToPointB ? positionB : positionA) - (Vector2)transform.position).magnitude;
+            if (magnitude < 0.5f)
+            {
+                movingToPointB = !movingToPointB;
+                direction *= -1;
+            }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        collision.transform.parent = transform;
-    }
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + (Vector3)direction, speed * Time.deltaTime);
+        }
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        collision.transform.parent = null;
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            collision.transform.parent = transform;
+        }
+
+        private void OnCollisionExit2D(Collision2D collision)
+        {
+            collision.transform.parent = null;
+        }
     }
 }

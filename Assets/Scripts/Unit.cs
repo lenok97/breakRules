@@ -2,28 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Unit : MonoBehaviour 
+namespace BreakRules
 {
-    public bool frozen=false;
-    public bool canShoot=true;
-
-    public virtual void ReceiveDamage()
+    public class Unit : MonoBehaviour
     {
-        Die();
-    }
+        public bool frozen = false;
+        public bool canShoot = true;
 
-    protected virtual void Die()
-    {
-        Destroy(gameObject);
-    }
+        public virtual void ReceiveDamage()
+        {
+            Die();
+        }
 
-    public void Unfroze()
-    {
-        frozen = false;
-    }
+        protected virtual void Die()
+        {
+            Destroy(gameObject);
+        }
 
-    public void CanShoot()
-    {
-        canShoot = true;
+        public void Unfroze()
+        {
+            frozen = false;
+        }
+
+        public void CanShoot()
+        {
+            canShoot = true;
+        }
     }
 }
