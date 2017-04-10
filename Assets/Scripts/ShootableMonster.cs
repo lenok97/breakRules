@@ -28,7 +28,7 @@ namespace BreakRules
 
         private void Shoot()
         {
-            if (Screen.GetComponent<Character>().visibly == true)
+            if (FindObjectOfType<Character>().visibly == true)
             {
                 Vector3 position = transform.position;
                 position.y += 0.3F;
