@@ -33,7 +33,7 @@ namespace BreakRules
             if (unit && unit.gameObject != base.Parent)
             {
                 Destroy(gameObject);
-                unit.frozen = true;
+                unit.rules.frozen = true;
                 unit.Invoke("Unfroze", actingTime);
             }
         }

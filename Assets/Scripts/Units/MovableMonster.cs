@@ -10,17 +10,17 @@ namespace BreakRules
         [SerializeField]
         private float speed = 2.0F;
 
-        private SpriteRenderer sprite;
         private Vector3 direction;
 
         protected override void Awake()
         {
             sprite = GetComponentInChildren<SpriteRenderer>();
+            rules = new Rules();
         }
 
         protected override void Update()
         {
-            if (!base.frozen)
+            if (!rules.frozen)
                 Move();
         }
 

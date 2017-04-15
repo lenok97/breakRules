@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-
 namespace BreakRules
 {
     public class Character : Unit
     {
         [SerializeField]
         public GameObject Cam;
-        public bool visibly = true;
-        public bool shell = false;
-        private static int maxLives = 20;
-        Vector3 gravityRotate = new Vector3(0, 180, 180);
 
+        private static int maxLives = 20;
         private float rate = 0.7F;
+        private LivesBar livesBar;
+        private bool isGrounded = false;
+        new private Rigidbody2D rigidbody;
+        private Animator animator;
+
+        //rules controllers
+        ChangeGravity gravityController = new ChangeGravity();
+        ChangeJump jumpController = new ChangeJump();
+        ChangeShell shellController = new ChangeShell();
+
 
         public static int MaxLives
         {
@@ -35,17 +41,6 @@ namespace BreakRules
             }
         }
 
-        private LivesBar livesBar;
-
-        [SerializeField]
-        private float speed = 3.0F;
-
-        [SerializeField]
-        private float jumpForce = 15.0F;
-
-        private bool isGrounded = false;
-        private bool canJump = true;
-
         private Bullet bullet;
 
         private UnitState.CharState State
@@ -54,18 +49,20 @@ namespace BreakRules
             set { animator.SetInteger("State", (int)value); }
         }
 
-        new private Rigidbody2D rigidbody;
-        private Animator animator;
-        private SpriteRenderer sprite;
+
 
         private void Awake()
         {
             livesBar = FindObjectOfType<LivesBar>();
 
+            ruleController.Add(gravityController);
+            ruleController.Add(jumpController);
+            ruleController.Add(shellController);
+
             rigidbody = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
             sprite = GetComponentInChildren<SpriteRenderer>();
-
+            rules = new Rules();
             bullet = Resources.Load<Bomb>("Bomb");
         }
 
@@ -76,30 +73,34 @@ namespace BreakRules
             {
                 State = UnitState.CharState.Idle;
             }
+            //foreach (IRule controller in ruleController)
+            //{
+            //    controller.Renew(rules);
+            //}
         }
 
         /*private void Update()
-        {
-            if (Input.GetButtonDown("Fire1") && base.canShoot)
-            {
-                bullet = Resources.Load<Laser>("Laser");
-                Shoot();
-            }
-            if (Input.GetButtonDown("Fire2") && base.canShoot)
-            {
-                bullet = Resources.Load<Bomb>("Bomb");
-                Shoot();
-            }
-            if (Input.GetButtonDown("Fire3") && base.canShoot)
-            {
-                bullet = Resources.Load<Stun>("Stun");
-                Shoot();
-            }
-        }*/
+     {
+         if (Input.GetButtonDown("Fire1") && base.canShoot)
+         {
+             bullet = Resources.Load<Laser>("Laser");
+             Shoot();
+         }
+         if (Input.GetButtonDown("Fire2") && base.canShoot)
+         {
+             bullet = Resources.Load<Bomb>("Bomb");
+             Shoot();
+         }
+         if (Input.GetButtonDown("Fire3") && base.canShoot)
+         {
+             bullet = Resources.Load<Stun>("Stun");
+             Shoot();
+         }
+     }*/
 
         public void Move(float value)
         {
-            if (frozen)
+            if (rules.frozen)
             {
                 return;
             }
@@ -109,18 +110,18 @@ namespace BreakRules
             }
 
             var direction = Vector2.right * (Mathf.Sign(value) * Mathf.Sqrt(Mathf.Abs(value)));
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + (Vector3)direction, speed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, transform.position + (Vector3)direction, rules.speed * Time.deltaTime);
             sprite.flipX = direction.x < 0;
         }
 
         public void Jump()
         {
-            if (!isGrounded || !canJump)
+            if (!isGrounded || !rules.canJump)
             {
                 return;
             }
             State = UnitState.CharState.Jump;
-            rigidbody.AddForce(transform.up * jumpForce, ForceMode2D.Impulse);
+            rigidbody.AddForce(transform.up * rules.jumpForce, ForceMode2D.Impulse);
         }
 
         public void Shoot()
@@ -140,34 +141,35 @@ namespace BreakRules
         public void ChangeGravity()
         {
             sprite = GetComponentInChildren<SpriteRenderer>();
-            transform.Rotate(gravityRotate);
+            transform.Rotate(rules.gravityRotate);
             rigidbody.gravityScale *= -1;
         }
 
         public void DisableJump()
         {
-            canJump = !canJump;
+            rules.canJump = !rules.canJump;
         }
 
         public void ActivateShell()
         {
-            shell = !shell;
+            rules.shell = !rules.shell;
         }
 
         public void DisableVisible()
         {
-            visibly = !visibly;
+            rules.visibly = !rules.visibly;
+            Cam.GetComponent<Camera>().cullingMask = rules.visibly ? -1 : 0;
         }
 
         public override void ReceiveDamage()
         {
-            if (!shell)                         //проверка на наличие щита
+            if (!rules.shell)                         //проверка на наличие щита
             {
                 Lives--;
                 rigidbody.velocity = Vector3.zero;
                 rigidbody.AddForce(transform.up * 8.0F, ForceMode2D.Impulse);
             }
-            else shell = false;
+            else rules.shell = false;
         }
 
 

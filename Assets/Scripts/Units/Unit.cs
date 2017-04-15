@@ -6,8 +6,12 @@ namespace BreakRules
 {
     public class Unit : MonoBehaviour
     {
-        public bool frozen = false;
+
         public bool canShoot = true;
+        public SpriteRenderer sprite;
+        public static GlobalRules globalRules = new GlobalRules();
+        public Rules rules;
+        public List<IRule> ruleController = new List<IRule>();
 
         public virtual void ReceiveDamage()
         {
@@ -21,7 +25,7 @@ namespace BreakRules
 
         public void Unfroze()
         {
-            frozen = false;
+            rules.frozen = false;
         }
 
         public void CanShoot()

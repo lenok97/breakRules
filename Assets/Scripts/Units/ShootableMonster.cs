@@ -28,7 +28,7 @@ namespace BreakRules
 
         private void Shoot()
         {
-            if (FindObjectOfType<Character>().visibly == true)
+            if (FindObjectOfType<Character>().rules.visibly == true)
             {
                 Vector3 position = transform.position;
                 position.y += 0.3F;

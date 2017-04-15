@@ -26,12 +26,14 @@ namespace BreakRules
                 if(doorState)
                 {
                     doorState = false;
+                    door.GetComponent<BoxCollider2D>().isTrigger = false;
                     door.gameObject.GetComponent<SpriteRenderer>().sprite = cl_door;
                     lever.gameObject.GetComponent<SpriteRenderer>().sprite = lev_off;
                 }
                 else
                 { 
                     doorState = true;
+                    door.GetComponent<BoxCollider2D>().isTrigger = true;
                     door.gameObject.GetComponent<SpriteRenderer>().sprite = op_door;
                     lever.gameObject.GetComponent<SpriteRenderer>().sprite = lev_on;
                 }
