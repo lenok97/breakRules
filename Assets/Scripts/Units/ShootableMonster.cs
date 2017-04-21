@@ -9,10 +9,9 @@ namespace BreakRules
         [SerializeField]
         private float rate = 2.0F;
         [SerializeField]
-        public GameObject screen;
         private Bullet bullet;
         [SerializeField]
-        private GameObject Screen;
+        private GameObject screen;
 
         protected override void Awake()
         {

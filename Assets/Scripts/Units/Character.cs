@@ -16,6 +16,7 @@ namespace BreakRules
         private bool isGrounded = false;
         new private Rigidbody2D rigidbody;
         private Animator animator;
+        private ShootingType.BulletType ShootingState;
 
         //rules controllers
         ChangeGravity gravityController = new ChangeGravity();
@@ -49,8 +50,6 @@ namespace BreakRules
             set { animator.SetInteger("State", (int)value); }
         }
 
-
-
         private void Awake()
         {
             livesBar = FindObjectOfType<LivesBar>();
@@ -66,6 +65,8 @@ namespace BreakRules
             bullet = Resources.Load<Bomb>("Bomb");
         }
 
+
+
         private void FixedUpdate()
         {
             CheckGround();
@@ -78,25 +79,6 @@ namespace BreakRules
             //    controller.Renew(rules);
             //}
         }
-
-        /*private void Update()
-     {
-         if (Input.GetButtonDown("Fire1") && base.canShoot)
-         {
-             bullet = Resources.Load<Laser>("Laser");
-             Shoot();
-         }
-         if (Input.GetButtonDown("Fire2") && base.canShoot)
-         {
-             bullet = Resources.Load<Bomb>("Bomb");
-             Shoot();
-         }
-         if (Input.GetButtonDown("Fire3") && base.canShoot)
-         {
-             bullet = Resources.Load<Stun>("Stun");
-             Shoot();
-         }
-     }*/
 
         public void Move(float value)
         {
@@ -143,6 +125,25 @@ namespace BreakRules
             sprite = GetComponentInChildren<SpriteRenderer>();
             transform.Rotate(rules.gravityRotate);
             rigidbody.gravityScale *= -1;
+        }
+
+        public void ChangeShooting()
+        {
+            ShootingState++;
+            
+            if ((int)ShootingState > 2)
+                ShootingState = 0;
+
+            if ((int)ShootingState == 0)
+                bullet = Resources.Load<Bomb>("Bomb");
+            else
+
+            if ((int)ShootingState == 1)
+                bullet = Resources.Load<Laser>("Laser");
+            else
+
+            if ((int)ShootingState == 2)
+                bullet = Resources.Load<Stun>("Stun");
         }
 
         public void DisableJump()
