@@ -9,35 +9,31 @@ namespace BreakRules
         [SerializeField]
         GameObject lever;
         [SerializeField]
-        GameObject door;
-        [SerializeField]
-        Sprite op_door;
-        [SerializeField]
-        Sprite cl_door;
-        [SerializeField]
         Sprite lev_on;
         [SerializeField]
         Sprite lev_off;
-        bool doorState;
+        bool leverState;
+        [SerializeField]
+        GameObject item;
         private void OnTriggerEnter2D(Collider2D collider)
         {
+
             if (collider.gameObject.name == "Character")
             {
-                if(doorState)
+                if (leverState)
                 {
-                    doorState = false;
-                    door.GetComponent<BoxCollider2D>().isTrigger = false;
-                    door.gameObject.GetComponent<SpriteRenderer>().sprite = cl_door;
+                    leverState = false;
                     lever.gameObject.GetComponent<SpriteRenderer>().sprite = lev_off;
+                    item.GetComponent<OpenableItems>().Disappear();
                 }
                 else
-                { 
-                    doorState = true;
-                    door.GetComponent<BoxCollider2D>().isTrigger = true;
-                    door.gameObject.GetComponent<SpriteRenderer>().sprite = op_door;
+                {
+                    leverState = true;
                     lever.gameObject.GetComponent<SpriteRenderer>().sprite = lev_on;
+                    item.GetComponent<OpenableItems>().Appear();
                 }
-            }        
+            }
         }
     }
 }
+      
