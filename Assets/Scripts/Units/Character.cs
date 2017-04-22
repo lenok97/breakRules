@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 namespace BreakRules
 {
@@ -74,10 +75,6 @@ namespace BreakRules
             {
                 State = UnitState.CharState.Idle;
             }
-            //foreach (IRule controller in ruleController)
-            //{
-            //    controller.Renew(rules);
-            //}
         }
 
         public void Move(float value)
@@ -130,19 +127,19 @@ namespace BreakRules
         public void ChangeShooting()
         {
             ShootingState++;
-            
-            if ((int)ShootingState > 2)
+
+            if ((int)ShootingState > Enum.GetNames(typeof(ShootingType.BulletType)).Length)
                 ShootingState = 0;
 
-            if ((int)ShootingState == 0)
+            if (ShootingState == ShootingType.BulletType.Bomb)
                 bullet = Resources.Load<Bomb>("Bomb");
             else
 
-            if ((int)ShootingState == 1)
+                if (ShootingState == ShootingType.BulletType.Laser)
                 bullet = Resources.Load<Laser>("Laser");
             else
 
-            if ((int)ShootingState == 2)
+                    if (ShootingState == ShootingType.BulletType.Stun)
                 bullet = Resources.Load<Stun>("Stun");
         }
 
