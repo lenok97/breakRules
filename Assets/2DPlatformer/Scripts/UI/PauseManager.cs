@@ -11,7 +11,7 @@ public class PauseManager : MonoBehaviour
 
     Canvas canvas;
     Button[] buttons;
-
+    
     void Start()
     {
         canvas = GetComponent<Canvas>();
