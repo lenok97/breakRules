@@ -24,14 +24,17 @@ public class SaveManager : MonoBehaviour
         foreach (Button button in buttons)
             button.enabled = false;
     }
-    public void SaveTo()
+    public void MenuSlot()
     {
         foreach (Button button in buttons)
             button.enabled = true;
         canvas.enabled = !canvas.enabled;
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
+    }
+    public void SlotName()
+    {
         string[] slots = {"Slot1","Slot2","Slot3","Slot4"};
-        for (int i = 0; i < slots.Length; i++)                       //заполнение кнопок временем сохранения(чтобы знать, какие слоты не пустые)
+        for (int i = 0; i < slots.Length; i++)                     
         {
             FileStream fs = new FileStream(slots[i]+".txt", FileMode.OpenOrCreate);
             StreamReader sr = new StreamReader(fs);
@@ -57,12 +60,7 @@ public class SaveManager : MonoBehaviour
             fs.Close();
             Saving(1);
         }
-        SaveTo();
-    }
-
-    public void Cancel()
-    {
-        SaveTo();
+        MenuSlot();
     }
 
     public void Clear()
@@ -72,7 +70,6 @@ public class SaveManager : MonoBehaviour
     }
     public void Slot1()
     {
-
         savename = "Slot1";
         slotname = Convert.ToString(DateTime.Now);
     }
