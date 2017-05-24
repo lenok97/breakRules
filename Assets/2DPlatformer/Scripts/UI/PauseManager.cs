@@ -32,7 +32,7 @@ public class PauseManager : MonoBehaviour
     public void Pause()
     {
         foreach (Button button in buttons)
-            button.enabled = true;
+            button.enabled = !button.enabled;
         canvas.enabled = !canvas.enabled;
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
     }

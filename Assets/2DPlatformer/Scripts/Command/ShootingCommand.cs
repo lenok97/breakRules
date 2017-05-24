@@ -29,7 +29,6 @@ public class ShootingCommand : MonoBehaviour, ICommand
                 {
                     Inventory.cartridge[Inventory.activeWeapon]--;
                     weapon.Shoot(unit, Inventory.activeWeapon);
-                    Debug.Log(Inventory.activeWeapon.ToString()+Inventory.cartridge[Inventory.activeWeapon]);
                 }
     }
 

@@ -11,18 +11,6 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private InventoryBar inventoryBar;
 
-    [SerializeField]
-    private static int maxItems = 20;
-
-    //public Dictionary<ShootingType.BulletType, int> Cartridge
-    //{
-    //    get { return cartridge; }
-    //    set { if (cartridge.Count < MaxLives) lives = value; livesBar.Refresh(); }
-    //}
-
-
-    public static int MaxItems { get { return maxItems; } }
-
     public static BulletType activeWeapon;
     public static List<BulletType> availableWeapon=new List<BulletType>();
     public static int selected = -1;
@@ -40,7 +28,22 @@ public class Inventory : MonoBehaviour
 
         if (availableWeapon.Count>0)
             activeWeapon = availableWeapon[selected];
-        //InventoryBar.Refresh();
-    } 
+
+    }
+
+    private void Update()
+    {
+        if (cartridge.ContainsKey(activeWeapon)&&cartridge[activeWeapon]==0)
+            ChangeActiveWeapon();
+    }
+
+    void OnGUI()
+    {
+        if (cartridge.ContainsKey(activeWeapon))
+        {
+            GUI.Label(new Rect(30, 40, 100, 50), cartridge[activeWeapon].ToString());
+        }
+        InventoryBar.Refresh();
+    }
 }
 
