@@ -9,6 +9,7 @@ public enum EVENT_TYPE
     GAME_END,
     DOOR_OPEN,
     DORR_CLOSE,
-    CHENGE_UNIT
+    CHENGE_UNIT,
+    UNIT_DIE
 }
 
