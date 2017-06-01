@@ -6,13 +6,14 @@ using UnityEngine;
 public class Player : Unit
 {
     private Animator animator;
-    //public Inventory inventory;
+
+    [SerializeField]
+    private WeaponBar weaponBar;
 
     void OnEnable()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
-        //inventory = GetComponent<Inventory>();
     }
 
     private void Update()
@@ -25,7 +26,10 @@ public class Player : Unit
         Lives--;
         Rb2D.velocity = Vector3.zero;
         Rb2D.AddForce(transform.up * 3.0F, ForceMode2D.Impulse);
+        if (Lives<=0)
+            EventManager.Instance.PostNotification(EVENT_TYPE.UNIT_DIE);
     }
+
 
     private void Animator()
     {

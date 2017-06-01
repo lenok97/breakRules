@@ -36,8 +36,8 @@ using System;
 
             if (unit && unit!= Parent)
             {
-                Destroy(gameObject);
                 unit.ReceiveDamage();
+                Destroy(gameObject);
             }
         }
     }

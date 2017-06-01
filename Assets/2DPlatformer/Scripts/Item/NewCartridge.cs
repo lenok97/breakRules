@@ -13,9 +13,9 @@ public class NewCartridge : MonoBehaviour
       private void OnTriggerEnter2D(Collider2D collider)
       {
          Player player = collider.GetComponent<Player>();
-         if (player&&Inventory.cartridge.ContainsKey(type))
+         if (player&&Weapon.cartridge.ContainsKey(type))
          {
-             Inventory.cartridge[type] += number;
+             Weapon.cartridge[type] += number;
              Destroy(gameObject);
          }
       }

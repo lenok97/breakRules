@@ -7,10 +7,10 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/2DPlatformer/Scenes/Menu.unity
-    guid: 27e98a6f63d86c44abd12d9fdf8d222e
+    guid: 62f5240de0e23f841b9bc0f81c7789f1
   - enabled: 1
-    path: Assets/2DPlatformer/Scenes/2DPlatformerMain.unity
-    guid: e0a1972c08fa4654a9c1bd74e5d9e085
+    path: Assets/2DPlatformer/Scenes/level1.unity
+    guid: f47bf1bb2edaeef4188a84b80c6f3fab
   - enabled: 1
-    path: Assets/2DPlatformer/Scenes/test2.unity
-    guid: 00000000000000000000000000000000
+    path: Assets/2DPlatformer/Scenes/level2.unity
+    guid: 6ee14a809c13a6648bdf7e13917724fe

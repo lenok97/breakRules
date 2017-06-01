@@ -13,7 +13,7 @@ public class Pause : MonoBehaviour
 
     public void Restart()
     {
-       SceneManager.LoadScene(SceneManager.sceneCount);
+        SceneManager.LoadScene(SceneManager.sceneCount);
         Time.timeScale = Time.timeScale == 0 ? 1 : 0;
     }
 }

@@ -78,6 +78,8 @@ public class DeadzoneCamera : MonoBehaviour, ICommand
 
                 break;
             }
+            else
+                EventManager.Instance.PostNotification(EVENT_TYPE.UNIT_DIE);
         }
 
         Vector3 current = transform.position;

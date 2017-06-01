@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoveCommand : MonoBehaviour, ICommand
 {
-
     private float jumpSiderun = 0.0F;
     Unit unit;
     Rigidbody2D rb2d;
@@ -22,8 +21,6 @@ public class MoveCommand : MonoBehaviour, ICommand
 
     void Update()
     {
-        // unit.move = Vector2.zero;
-
         unit.TargetVelosity = new Vector2(Input.GetAxis("Horizontal"), 0);
 
         if (Input.GetButtonDown("Jump") && unit.Grounded)

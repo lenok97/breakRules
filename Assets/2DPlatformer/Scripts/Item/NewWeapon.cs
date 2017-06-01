@@ -8,18 +8,20 @@ public class NewWeapon : MonoBehaviour
     private int number = 45;
 
     [SerializeField]
-    BulletType type = BulletType.Bomb;
+    BulletType type;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         Player player = collider.GetComponent<Player>();
         if (player)
         {
-            if (player && Inventory.cartridge.ContainsKey(type))
-                Inventory.cartridge[type] = +number;
+            if (Weapon.cartridge.ContainsKey(type))
+                Weapon.cartridge[type] += number;
             else
-                Inventory.cartridge.Add(type, number);
-            Inventory.activeWeapon = type;
+            {
+                Weapon.cartridge.Add(type, number);
+            }
+            Weapon.activeWeapon = type;
             Destroy(gameObject);
         }
     }

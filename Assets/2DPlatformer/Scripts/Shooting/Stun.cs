@@ -6,11 +6,12 @@ using System;
 
     public class Stun : Bullet
     {
+        [SerializeField]
+        private float actingTime = 5F;
         private float sizeChange;
         private Vector3 rotate = new Vector3(0, 0, 15);
         System.Random randomFactor = new System.Random();
         private float sizeFactor;
-        private float actingTime = 5F;
 
         protected override void Update()
         {
@@ -32,6 +33,8 @@ using System;
             if (unit && unit!= Parent)
             {
                 Destroy(gameObject);
+                unit.Froze();
+                unit.Invoke("Unfroze", actingTime);
             }
         }
     }

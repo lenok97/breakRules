@@ -184,9 +184,6 @@ public class Unit : MonoBehaviour, IEnumerable
 
     public void ChengeGravity()
     {
-        //spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        //transform.RotateAround(rb2D.position, Vector3.forward, 180);
-        //transform.RotateAround(rb2D.position, Vector3.up, 180);
         transform.Rotate(new Vector3(0, 180, 180));
         rb2D.gravityScale *= -1;
         gravityDirection *= -1;
@@ -195,6 +192,16 @@ public class Unit : MonoBehaviour, IEnumerable
     public virtual void ReceiveDamage()
     {
         Destroy(gameObject);
+    }
+
+    public virtual void Froze()
+    {
+        MaxSpeed *= 0;
+    }
+
+    public virtual void Unfroze()
+    {
+        MaxSpeed = coefficientSpeed;
     }
 
 #endregion

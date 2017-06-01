@@ -2,30 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//namespace BreakRules
-//{
-    public class Monster :Unit
+public class Monster :Unit
+{
+
+    void OnEnable()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
-        void OnEnable()
+    protected virtual void OnCollisionEnter2D(Collision2D coll)
+    {
+        Player character = coll.collider.GetComponent<Player>();
+        if (character)
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
-
-        protected virtual void OnTriggerEnter2D(Collider2D collider)
-        {
-            Bullet bullet = collider.GetComponent<Bullet>();
-
-            if (bullet && bullet.Parent != this)
-            {
-                ReceiveDamage();
-            }
-
-            Player character = collider.GetComponent<Player>();
-            if (character)
-            {
-                character.ReceiveDamage();
-            }
+            character.ReceiveDamage();
         }
     }
-//}
+
+
+}
+

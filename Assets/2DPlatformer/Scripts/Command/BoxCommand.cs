@@ -5,7 +5,6 @@ using System;
 
 public class BoxCommand : MonoBehaviour, ICommand
 {
-
     private Unit box = null;
     private Unit unit = null;
 

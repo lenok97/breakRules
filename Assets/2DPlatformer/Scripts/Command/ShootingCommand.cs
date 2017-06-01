@@ -6,30 +6,29 @@ public class ShootingCommand : MonoBehaviour, ICommand
 {
     Transform unitTransform;
     Unit unit;
-    Weapon weapon;
+    Shooting shooting;
 
     private void Start()
     {
         Controller.Instance.AddCommand(this);
         unit = FindObjectOfType<Player>();
-        weapon = gameObject.AddComponent<Weapon>() as Weapon;
+        shooting = gameObject.AddComponent<Shooting>() as Shooting;
     }
 
     private void Update()
     {
         if (Input.GetButtonDown("ChangeShooting"))
         {
-            Inventory.ChangeActiveWeapon();
+            Weapon.ChangeActiveWeapon();
         }
         else
             if (Input.GetButtonDown("Fire1"))
                 
-                if (Inventory.cartridge.ContainsKey(Inventory.activeWeapon) 
-                && Inventory.cartridge[Inventory.activeWeapon]>0)
+                if (Weapon.cartridge.ContainsKey(Weapon.activeWeapon) 
+                && Weapon.cartridge[Weapon.activeWeapon]>0)
                 {
-                    Inventory.cartridge[Inventory.activeWeapon]--;
-                    weapon.Shoot(unit, Inventory.activeWeapon);
-                    Debug.Log(Inventory.activeWeapon.ToString()+Inventory.cartridge[Inventory.activeWeapon]);
+                    shooting.Shoot(unit, Weapon.activeWeapon);
+                    Weapon.cartridge[Weapon.activeWeapon]--;
                 }
     }
 
